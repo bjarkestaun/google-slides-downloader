@@ -1,11 +1,17 @@
-var rp = require('request-promise');
+var request = require('request');
 var htmlparser = require("htmlparser2");
 var traverse = require('./htmlTraverser');
 
 module.exports = {
   // returns a promise that when resolved gives the raw html from a url
-  getHtml: function (url) {
-    return rp(url);
+  getHtml: function (url, callback) {
+    request(url, function (error, response, body) {
+      if (error) {
+        callback(error);
+      } else {
+        callback(null, body);
+      }
+    });
   },
 
   // takes a string of raw html
@@ -20,16 +26,14 @@ module.exports = {
 
   // takes a URL
   // returns a promise that when resolves gives an array of the SVGs on that URL location
-  getSVGs: function (url) {
-    return new Promise(function (resolve, reject) {
-      return module.exports.getHtml(url)
-      .then(function (rawHtml) {
-        var result = module.exports.convert(rawHtml);
-        resolve(result);
-      })
-      .catch(function (error) {
-        reject(error);
-      });
+  getSVGs: function (url, callback) {
+    module.exports.getHtml(url, function (error, html) {
+      if (error) {
+        callback(error);
+      } else {
+        var result = module.exports.convert(html);
+        callback(null, result);
+      }
     });
   }
 };

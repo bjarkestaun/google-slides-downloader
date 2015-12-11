@@ -12,13 +12,19 @@ describe('the google slides downloader', function () {
 
     it('should return an array of SVGs from the attached raw Google html', function () {
       var url = 'https://docs.google.com/presentation/d/1HsdP94BUaT2xCV3vjvu-3O9fiFfnTrNyKYRQTBUWnYY/embed';
+      var url2 = 'https://docs.google.com/presentation/d/16M1roku_Z49q5loX4UVwA4p2soJHE1zasfS_yccP4HA/embed';
 
-      return Promise.resolve(downloader.getSVGs(url)).should.eventually.be.instanceof(Array);
-
-      downloader.getHtml(url)
-      .then(function (html) {
-
+      downloader.getSVGs(url)
+      .then(function (svgs) {
+        console.log(svgs);
       });
+
+      // return Promise.resolve(downloader.getSVGs(url)).should.eventually.be.instanceof(Array);
+
+      // downloader.getHtml(url)
+      // .then(function (html) {
+
+      // });
 
     //   fs.readFile('./google-raw.html', 'utf8', function (err, doc) {
     //     var result = googleSlidesDownloader.get(doc);
