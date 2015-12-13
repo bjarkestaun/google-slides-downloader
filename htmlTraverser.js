@@ -19,7 +19,8 @@ var recurse = function (collection) {
       // '\n  SK_svgData = \'';
       if (svgScript.indexOf('SK_svgData = \'') > -1) {
         var startIndex = svgScript.indexOf('SK_svgData = \'') + 14;
-        var endIndex = svgScript.indexOf(';', startIndex) - 1;
+        var endIndex = svgScript.indexOf('; SK_modelChunkLoadStart', startIndex) - 1;
+        console.log('start ', startIndex, ' end ', endIndex);
         var svgData = svgScript.substring(startIndex, endIndex);
         var svg = eval('"' + svgData + '"');
         result.push(svg);
